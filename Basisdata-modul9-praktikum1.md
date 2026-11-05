@@ -17,7 +17,14 @@ Langkah pertama adalah membuat transaksi untuk memasukkan data pasien baru tanpa
 2. Klik Add routine.
 3. Pada kotak dialog yang muncul, isi Routine name dengan transaksi1 dan pastikan Type adalah PROCEDURE.
 4. Pada kolom Definition, masukkan kode SQL berikut:
-
+```sql
+BEGIN
+START TRANSACTION;
+INSERT INTO `pasien` (`id_pasien`, `nama_pasien`, `alamat_pasien`, `jenis_kelamin`)
+VALUES (6, 'Tito', 'Jl.Pakis Haji no 23', '1');
+SELECT * FROM pasien;
+END
+```
 5. Klik Go untuk menyimpan.
 6. Buka menu SQL dan jalankan routine tersebut dengan memasukkan perintah CALL transaksi1;.
 7. Layar akan menampilkan hasil query di mana data pasien dengan id 6 (Tito) muncul.
@@ -29,7 +36,15 @@ Untuk memastikan data tersimpan secara permanen ke dalam tabel, perintah transak
 
 1. Buat store procedure baru (melalui Add routine) dan beri nama transaksi2.
 2. Masukkan modifikasi kode SQL berikut pada kolom Definition:
-
+```sql
+BEGIN
+START TRANSACTION;
+INSERT INTO `pasien` (`id_pasien`, `nama_pasien`, `alamat_pasien`, `jenis_kelamin`)
+VALUES (6, 'Tito', 'Jl.Pakis Haji no 23', '1');
+SELECT * FROM pasien;
+COMMIT;
+END
+```
 3. Klik Go untuk menyimpannya.
 4. Buka menu SQL dan eksekusi perintah CALL transaksi2;.
 5. Buka kembali tabel pasien. Kini Anda dapat melihat bahwa data id_pasien 6 telah berhasil masuk ke dalam tabel pasien. 
