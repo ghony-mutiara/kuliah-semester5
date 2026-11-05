@@ -97,13 +97,22 @@ show tables;
 **Praktik DML (Data Manipulation Language)**
 1. Memasukkan data ke tabel.
 ```sql
-INSERT INTO pasien (id_pasien, nama_pasien, alamat_pasien, jenis_kelamin) 
+INSERT INTO pasien (id_pasien, nama_pasien, alamat_pasien, jenis_kelamin,) 
 VALUES 
   (1, 'Joko Widodo', 'Jalan Pakis haji no 35 Jakarta', 1),
   (2, 'Budi Santoso', 'Jalan Pucuk Merah no 10 Palangkaraya', 1),
-  (3, 'Siti Aminah', 'Jalan Sri Rejeki no 88 Bekasi', 2);
+  (3, 'Siti Aminah', 'Jalan Sri Rejeki no 88 Bekasi', 2),
   (4, 'Prabowo Subianto', 'Jalan Lidah Buaya no 3 Jakarta', 1),
   (5, 'Megawati Soekarnoputri', 'Jalan Lidah Mertua no 79 Jakarta', 2);
+```
+```sql
+INSERT INTO pasien_dokter (id_pasien, id_dokter, nama_dokter, waktu_periksa, resep,) 
+VALUES 
+  (1, 3, 'Tirta Mandira', '2026-10-21', 'ID0001'),
+  (2, 2, 'Gia Pratama', '2026-10-22', 'ID0010'),
+  (3, 1, 'Faisal Adam', '2026-10-23', 'ID0102'),
+  (4, 3, 'Tirta Mandira', '2026-10-24', 'ID1020'),
+  (5, 3, 'Tirta Mandira', '2026-10-25', 'ID0203');
 ```
 2. Mengambil seluruh data pada tabel.
 ```sql
@@ -162,7 +171,7 @@ UPDATE pasien SET nama_pasien='Mirna Maryati' WHERE id_pasien=5;
 ```
 14. Menghapus data.
 ```sql
-
+DELETE FROM pasien WHERE id_pasien=5;
 ```
 
 
