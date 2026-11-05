@@ -1,8 +1,8 @@
 <h1>Kegiatan Praktikum 1 - Aplikasi Basis Data</h1>
 
-1. Install XAMPP di URL https://www.apachefriends.org/index.html dan lakukan instalasi.
+1. Install XAMPP menggunakan URL https://www.apachefriends.org/index.html dan lakukan instalasi.
 2. Buka XAMPP Control Panel, aktifkan service modul Apache dan MySQL dengan klik Start. Service dinyatakan aktif jika sudah berwarna hijau.
-3. Buka Web Browser, lalu ketikkan http://localhost/phpmyadmin/ untuk mengakses phpMyadmin.
+3. Buka Web Browser, lalu gunakan URL http://localhost/phpmyadmin/ untuk mengakses phpMyadmin.
 
 <h1>Kegiatan Praktikum 2 - SQL dengan XAMPP</h1>
 
@@ -180,6 +180,22 @@ UPDATE pasien SET nama_pasien='Mirna Maryati' WHERE id_pasien=5;
 ```sql
 DELETE FROM pasien WHERE id_pasien=5;
 ```
+
+<h3>Menggunakan phpMyAdmin</h3>
+
+**Mengakses Basis Data**
+1. Buka web browser, lalu akses URL http://localhost/phpmyadmin/.
+
+**Praktik DDL (Data Definition Language)**
+1. **Membuat Basis Data:** Klik menu Databases di menu atas, ketik rumahsakit pada kolom Database name, lalu klik tombol Create.
+2. **Menghapus Basis Data (Opsional):** Pada menu Databases, centang nama basis data yang ingin dihapus, klik tombol Drop di bawah daftar, lalu klik OK pada peringatan yang muncul.
+3. **Membuat Tabel:** Pilih basis data rumahsakit di panel kiri. Di bagian Create table, masukkan nama tabel (misal: pasien) dan jumlah kolomnya, klik Go, lalu konfigurasi properti masing-masing field, seperti menetapkan Primary Key dan Auto Increment, lalu simpan.
+4. **Mengatur Foreign Key dan Relasi:** Pertama-tama buka tabel yang akan menampung foreign key tersebut (misal: tabel dokter_admin), masuk ke tab Structure, pilih field targetnya, lalu klik Index. Setelah index berhasil dipasang, navigasikan ke panel kiri untuk mengeklik nama basis data rumahsakit dan buka menu Designer. Terakhir, klik menu Create relationship pada panel samping, hubungkan referenced key (kunci primer) dengan field foreign key pasangannya, atur pengaturan ON DELETE dan ON UPDATE menjadi CASCADE, kemudian klik OK untuk menyimpan relasi tersebut.
+
+**Praktik DML (Data Manipulation Language)**
+1. **Insert:** Buka tabel yang diinginkan lalu klik tab Insert di menu atas untuk memasukkan data secara visual melalui form isian.
+2. **Eksekusi Query (Select, Update, Delete, dll):** Klik tab SQL pada phpMyAdmin. Di kotak teks yang tersedia, kamu bisa mengetikkan seluruh perintah SQL persis seperti di CMD, kemudian klik tombol Go di pojok kanan bawah.
+3. **Hasil dari eksekusi query**, terutama untuk variasi fungsi SELECT dan JOIN, akan langsung ditampilkan secara rapi di dalam tabel visual phpMyAdmin.
 
 
 
