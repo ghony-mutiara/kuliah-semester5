@@ -97,7 +97,7 @@ show tables;
 **Praktik DML (Data Manipulation Language)**
 1. Memasukkan data ke tabel.
 ```sql
-INSERT INTO pasien (id_pasien, nama_pasien, alamat_pasien, jenis_kelamin,) 
+INSERT INTO pasien (id_pasien, nama_pasien, alamat_pasien, jenis_kelamin) 
 VALUES 
   (1, 'Joko Widodo', 'Jalan Pakis haji no 35 Jakarta', 1),
   (2, 'Budi Santoso', 'Jalan Pucuk Merah no 10 Palangkaraya', 1),
@@ -106,13 +106,20 @@ VALUES
   (5, 'Megawati Soekarnoputri', 'Jalan Lidah Mertua no 79 Jakarta', 2);
 ```
 ```sql
-INSERT INTO pasien_dokter (id_pasien, id_dokter, nama_dokter, waktu_periksa, resep,) 
+INSERT INTO dokter (id_dokter, nama_dokter, alamat_dokter, tanggal_lahir, no_hp, spesialis, waktu_kerja)
 VALUES 
-  (1, 3, 'Tirta Mandira', '2026-10-21', 'ID0001'),
-  (2, 2, 'Gia Pratama', '2026-10-22', 'ID0010'),
-  (3, 1, 'Faisal Adam', '2026-10-23', 'ID0102'),
-  (4, 3, 'Tirta Mandira', '2026-10-24', 'ID1020'),
-  (5, 3, 'Tirta Mandira', '2026-10-25', 'ID0203');
+  (1, 'Faisal Adam', 'Jalan Sedap Malam No 12 Bekasi', '1985-04-12', '081234567890', 'Saraf', 'Senin-Rabu, 08:00-14:00'),
+  (2, 'Gia Pratama', 'Jalan Kacapiring No 5 Jakarta', '1982-11-25', '081987654321', 'Bedah', 'Selasa-Kamis, 10:00-16:00'),
+  (3, 'Tirta Mandira', 'Jalan Kamboja No 8 Bekasi', '1978-08-08', '081512345678', 'THT-KL', 'Jumat-Minggu, 09:00-15:00');
+```
+```sql
+INSERT INTO pasien_dokter (id_pasien, id_dokter, waktu_periksa, resep) 
+VALUES 
+  (1, 3, '2026-10-23', 'ID0001'),
+  (2, 2, '2026-10-21', 'ID0010'),
+  (3, 1, '2026-10-20', 'ID0102'),
+  (4, 3, '2026-10-24', 'ID1020'),
+  (5, 3, '2026-10-25', 'ID0203');
 ```
 2. Mengambil seluruh data pada tabel.
 ```sql
@@ -139,7 +146,7 @@ SELECT p.nama_pasien, pd.waktu_periksa, pd.resep, d.nama_dokter
 FROM pasien p 
 JOIN pasien_dokter pd ON p.id_pasien = pd.id_pasien 
 JOIN dokter d ON pd.id_dokter = d.id_dokter 
-WHERE d.id_dokter='1';
+WHERE d.id_dokter = 1;
 ```
 7. Menghitung banyaknya baris data.
 ```sql
