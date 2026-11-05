@@ -10,6 +10,7 @@
 <h3>Praktikum Commit</h3>
 
 **Membuat Transaksi Tanpa Commit (transaksi1)**
+
 Langkah pertama adalah membuat transaksi untuk memasukkan data pasien baru tanpa perintah commit. Data yang akan dimasukkan adalah id_pasien = 6, nama_pasien = Tito, alamat_pasien = Jl.Pakis Haji no 23, dan jenis_kelamin = 1.
 
 1. Pilih basis data rumahsakit, kemudian masuk ke menu Routines.
