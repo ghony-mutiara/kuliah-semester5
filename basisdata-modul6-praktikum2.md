@@ -178,7 +178,7 @@ DELETE FROM pasien WHERE id_pasien=5;
 <h3>Menggunakan phpMyAdmin</h3>
 
 **Mengakses Basis Data**
-1. Buka web browser, lalu akses URL http://localhost/phpmyadmin/.
+Buka web browser, lalu akses URL http://localhost/phpmyadmin/.
 
 **Praktik DDL (Data Definition Language)**
 1. **Membuat Basis Data:** Klik menu Databases di menu atas, ketik rumahsakit pada kolom Database name, lalu klik tombol Create.
