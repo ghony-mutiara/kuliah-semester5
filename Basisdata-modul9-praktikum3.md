@@ -91,3 +91,19 @@ MASTER_LOG_POS=2926;
 start slave;
 ```
 18. Cek kembali status di phpMyAdmin menu Replication. Jika nilai Slave_IO_Running dan Slave_SQL_Running menunjukkan Yes, maka konfigurasi telah berhasil.
+
+<h3>Pengujian Replikasi Basis Data</h3>
+
+1. Buka tabel obat pada komputer 1 (Windows 10 - Master).
+2. Lakukan insert data, contoh: menambahkan obat "Demam" dengan kode A005, harga 1500, dan stok 100.
+```sql
+INSERT INTO obat (kode_obat, nama_obat, harga, stok) 
+VALUES ('A005', 'Demam', 1500, 100);
+```
+3. Cek tabel obat pada komputer 2 (Ubuntu - Slave).
+```sql
+SELECT * FROM obat;
+```
+
+Jika data tersebut secara otomatis bertambah dan identik dengan data di komputer 1, maka proses replikasi basis data satu arah (master to slave) telah sukses dijalankan.
+
