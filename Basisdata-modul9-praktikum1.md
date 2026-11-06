@@ -5,7 +5,7 @@
 1. Buka XAMPP Control Panel, aktifkan service modul Apache dan MySQL dengan klik Start. Service dinyatakan aktif jika sudah berwarna hijau.
 2. Buka web browser dan akses URL http://localhost/phpmyadmin/.
 3. Pilih basis data rumah sakit yang telah disiapkan sebelumnya pada praktikum Modul 6.
-4. Periksa tipe tabel (Storage Engine) pada basis data tersebut dan pastikan tipenya adalah InnoDB. Transaksi dalam basis data MySQL hanya dapat berjalan jika menggunakan storage engine InnoDB (atau BDB).
+4. Periksa tipe tabel (Storage Engine) pada basis data tersebut dan pastikan tipenya adalah InnoDB. Transaksi dalam basis data MySQL hanya dapat berjalan jika menggunakan storage engine InnoDB atau BDB.
 
 <h3>Praktikum Commit</h3>
 
@@ -75,7 +75,7 @@ END
 3. Simpan dengan klik Go.
 4. Jalankan perintah CALL transaksi3; pada menu SQL.
 
-Pada layar hasil, akan terlihat tidak ada perubahan data yang terjadi (nama tetap Popi) karena perintah perubahan telah digugurkan oleh ROLLBACK sebelum COMMIT dilakukan.
+Pada layar hasil, akan terlihat tidak ada perubahan data yang terjadi, karena perintah perubahan telah digugurkan oleh ROLLBACK sebelum COMMIT dilakukan.
 
 **Menggugurkan Perintah Insert dan Melanjutkan Update (transaksi4)**
 
@@ -129,16 +129,16 @@ SELECT * FROM pasien;
 END
 ```
 4. Berdasarkan kode di atas, setelah melakukan INSERT yang pertama, dilakukan proses penandaan menggunakan savepoint dengan nama point1.
-5. Kemudian dilakukan INSERT yang kedua (data Tina), namun perintah tersebut di-rollback kembali ke titik savepoint point1.
-6. Selanjutnya dilakukan kembali perintah INSERT yang ketiga (data Lutfhi).
+5. Kemudian dilakukan INSERT data Tina, namun perintah tersebut di-rollback kembali ke titik savepoint point1.
+6. Selanjutnya dilakukan kembali perintah INSERT yang data Lutfhi.
 7. Klik tombol Go untuk menyimpan routine transaksi tersebut.
 8. Untuk menjalankan transaksi ini, buka menu SQL dan lakukan pemanggilan dengan cara mengetikkan perintah CALL transaksi5;.
 
-Hasil dari eksekusi transaksi 5 ini memperlihatkan bahwa data yang berhasil masuk ke dalam basis data hanya 2 data, yaitu id_pasien 7 (Hanif) dan id_pasien 9 (Lutfhi). Sedangkan data untuk id_pasien 8 (Tina) tidak masuk ke dalam basis data karena telah digugurkan (di-rollback) kembali ke titik simpan point1 sebelum diakhiri dengan COMMIT.
+Hasil dari eksekusi transaksi 5 ini memperlihatkan bahwa data yang berhasil masuk ke dalam basis data hanya 2 data, yaitu id_pasien 7 (Hanif) dan id_pasien 9 (Lutfhi). Sedangkan data untuk id_pasien 8 (Tina) tidak masuk ke dalam basis data karena telah di-rollback kembali ke titik simpan point1 sebelum diakhiri dengan COMMIT.
 
 <h3>Praktikum Check Trigger</h3>
 
-Trigger merupakan sebuah perintah atau event yang dapat memicu perubahan sebuah basis data. Event yang dapat digunakan yaitu memasukkan (insert), perubahan (update), dan penghapusan (delete). Event-event tersebut digabungkan dengan kata kunci pemicu, yaitu BEFORE (dilakukan sebelum perintah dilaksanakan) dan AFTER (dilakukan setelah perintah dilaksanakan).
+Trigger merupakan sebuah perintah atau event yang dapat memicu perubahan sebuah basis data. Event yang dapat digunakan yaitu insert, update, dan delete. Event-event tersebut digabungkan dengan kata kunci pemicu, yaitu BEFORE (dilakukan sebelum perintah dilaksanakan) dan AFTER (dilakukan setelah perintah dilaksanakan).
 
 Berikut adalah kombinasi perintah dalam trigger:
 
@@ -151,23 +151,44 @@ Berikut adalah kombinasi perintah dalam trigger:
 
 **Persiapan Basis Data dan Tabel**
 
-Untuk menjalankan trigger, Anda harus menyiapkan tabel-tabel pada basis data rumahsakit (dari ERD sebelumnya) dan menambahkan 2 tabel baru.
+Untuk menjalankan trigger, Anda harus menyiapkan tabel-tabel pada basis data rumahsakit dan menambahkan 2 tabel baru.
 
 1. Tabel obat:
 ```sql
-CREATE TABLE obat (id_obat INT(6) AUTO_INCREMENT PRIMARY KEY, kode_obat VARCHAR(5), nama_obat VARCHAR(30), harga integer(10), stok integer(5))
+CREATE TABLE obat (
+  id_obat INT(6) AUTO_INCREMENT PRIMARY KEY,
+  kode_obat VARCHAR(5),
+  nama_obat VARCHAR(30),
+  harga integer(10),
+  stok integer(5)
+);
 ```
 2. Tabel transaksi_obat:
 ```sql
-CREATE TABLE transaksi_obat (id_transaksi int(3) AUTO_INCREMENT PRIMARY KEY, id_pasien INT(3), id_obat INT(6), jumlah int(10), total_harga int(10))
+CREATE TABLE transaksi_obat (
+  id_transaksi int(3) AUTO_INCREMENT PRIMARY KEY,
+  id_pasien INT(3),
+  id_obat INT(6),
+  jumlah int(10),
+  total_harga int(10)
+);
 ```
-Masukkan kode SQL di atas pada menu SQL untuk membuat kedua tabel tersebut. Selanjutnya, relasikan tabel-tabel tersebut dengan mengklik menu Designer, lalu pilih Show/Hide table list, dan centang seluruh tabel agar siap direlasikan (fokuskan relasi pada tabel pasien, transaksi_obat, dan obat).
+
+Masukkan kode SQL di atas pada menu SQL untuk membuat kedua tabel tersebut. Selanjutnya, relasikan tabel-tabel tersebut dengan mengklik menu Designer, lalu pilih Show/Hide table list, dan centang seluruh tabel agar siap direlasikan.
 
 Sebelum masuk ke trigger, isi tabel obat dengan minimal 3 data. Sebagai contoh:
 
 - id_obat 1: Amikacin (stok 10).
 - id_obat 2: Amoxillin (stok 20).
 - id_obat 3: Betadine (stok 5).
+
+```sql
+INSERT INTO obat (id_obat, kode_obat, nama_obat, harga, stok)
+VALUES 
+  (1, 'K0001', 'Amikacin', 50000, 10),
+  (2, 'K0002', 'Amoxillin', 15000, 20),
+  (3, 'K0003', 'Betadine', 10000, 5);
+```
 
 **Membuat Trigger**
 
@@ -180,8 +201,9 @@ CREATE TRIGGER tg_jual AFTER INSERT
 ON transaksi_obat
 FOR EACH ROW
 BEGIN
-UPDATE obat SET stok = stok - new.jumlah
-WHERE id_obat = new.id_obat;
+  UPDATE obat 
+  SET stok = stok - new.jumlah
+  WHERE id_obat = new.id_obat;
 END $$
 DELIMITER ;
 ```
@@ -189,27 +211,29 @@ DELIMITER ;
 Penjelasan kode:
 
 - DELIMITER $$: Batas awal sebuah event trigger.
-- CREATE TRIGGER tg_jual AFTER INSERT: Membuat trigger bernama tg_jual yang akan dijalankan setelah data dimasukkan (after insert).
+- CREATE TRIGGER tg_jual AFTER INSERT: Membuat trigger bernama tg_jual yang akan dijalankan setelah data dimasukkan.
 - ON transaksi_obat: Event trigger bekerja jika ada perubahan pada tabel transaksi_obat.
 - FOR EACH ROW: Berlaku untuk setiap baris pada tabel transaksi_obat.
 - BEGIN: Mulai eksekusi perintah SQL.
-- UPDATE obat ...: Melakukan update pada atribut stok di tabel obat, yaitu mengurangi stok saat ini dengan data baru (new.jumlah) yang diinput ke transaksi_obat, dengan kondisi id_obat yang baru diinputkan sama dengan id_obat pada tabel obat.
+- UPDATE obat ...: Melakukan update pada atribut stok di tabel obat, yaitu mengurangi stok saat ini dengan data baru yang diinput ke transaksi_obat, dengan kondisi id_obat yang baru diinputkan sama dengan id_obat pada tabel obat.
 - END $$: Akhir eksekusi perintah SQL.
 - DELIMITER ;: Batas akhir sebuah event trigger.
 
-Pada phpMyAdmin, Anda dapat memasukkan kode ini langsung melalui menu SQL atau melalui menu Triggers dengan mengklik Add trigger dan mengisikan detail namanya (tg_jual), tabel (transaksi_obat), waktu (AFTER), event (INSERT), dan definisi SQL-nya, lalu klik Go.
+Pada phpMyAdmin, Anda dapat memasukkan kode ini langsung melalui menu SQL atau melalui menu Triggers dengan mengklik Add trigger dan mengisikan detail namanya, tabel, waktu, event, dan definisi SQL-nya, lalu klik Go.
 
 **Pengujian Trigger**
 
-1. Perhatikan kondisi awal tabel obat, di mana stok Amoxillin (id_obat 2) berjumlah 20.
-2. Masukkan data ke tabel transaksi_obat melalui phpMyAdmin (tab Insert) atau menu SQL dengan perintah:
+1. Perhatikan kondisi awal tabel obat, di mana stok Amoxillin berjumlah 20.
+2. Masukkan data ke tabel transaksi_obat melalui phpMyAdmin tab Insert atau menu SQL dengan perintah:
 ```sql
-INSERT INTO transaksi_obat (id_transaksi, id_pasien, id_obat, jumlah, total_harga) VALUES (NULL, '1', '2', '5', '0');
+INSERT INTO transaksi_obat (id_transaksi, id_pasien, id_obat, jumlah, total_harga)
+VALUES
+  (NULL, '1', '2', '5', '0');
 ```
 3. Setelah data berhasil dimasukkan, periksa kembali tabel obat.
-4. Kondisi stok Amoxillin secara otomatis berkurang sebanyak 5 (menjadi 15) berdasarkan jumlah data yang dimasukkan pada tabel transaksi_obat.
+4. Kondisi stok Amoxillin secara otomatis berkurang sebanyak 5 menjadi 15 berdasarkan jumlah data yang dimasukkan pada tabel transaksi_obat.
 
-Kesimpulan dari trigger adalah sebagai pemicu jika ada perubahan pada baris sebuah tabel (baik insert, update, ataupun delete) di dalam basis data.
+Kesimpulan dari trigger adalah sebagai pemicu jika ada perubahan pada baris sebuah tabel, baik insert, update, ataupun delete, di dalam basis data.
  
 
 
