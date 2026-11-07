@@ -148,7 +148,7 @@ SELECT count(id_pasien) from pasien;
 ```
 8. Mengambil data berdasarkan potongan string dari kiri.
 ```sql
-SELECT * FROM pasien WHERE left(alamat_pasien,2)='Jl';
+SELECT * FROM pasien WHERE left(alamat_pasien,2)='Ja';
 ```
 9. Mengambil data di antara dua rentang nilai.
 ```sql
