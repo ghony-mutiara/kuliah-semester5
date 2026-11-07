@@ -26,7 +26,10 @@ SELECT * FROM pasien;
 END
 ```
 5. Klik Go untuk menyimpan.
-6. Buka menu SQL dan jalankan routine tersebut dengan memasukkan perintah CALL transaksi1;.
+6. Buka menu SQL dan jalankan routine tersebut dengan memasukkan perintah:
+```sql
+CALL transaksi1;
+```
 7. Layar akan menampilkan hasil query di mana data pasien dengan id 6 (Tito) muncul.
 8. Buka tabel pasien untuk memverifikasi. Pada tabel tersebut, akan terlihat bahwa data dengan id_pasien 6 tidak ada.
 
