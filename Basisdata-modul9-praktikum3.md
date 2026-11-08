@@ -17,8 +17,12 @@ sudo ./xampp-linux-x64-7.4.10-0-installer.run
 chmod +x xampp-linux-x64-8.2.4-0-installer.run
 ```
 6. Ikuti proses Setup Wizard dengan menekan Next >. Pastikan komponen XAMPP Core Files dan XAMPP Developer Files terpilih. XAMPP akan diinstal ke direktori /opt/lampp. Selesaikan instalasi hingga muncul tombol Finish.
-7. Buka XAMPP Control Panel, masuk ke tab Manage Servers, lalu klik Start untuk menjalankan Apache Web Server dan MySQL Database.
-8. Uji keberhasilan instalasi dengan mengakses http://localhost/phpmyadmin melalui browser Ubuntu.
+7. Buka XAMPP Control Panel, dengan memasukkan perintah pada terminal:
+```bash
+sudo /opt/lampp/manager-linux-x64.run
+```
+8. Masuk ke tab Manage Servers, lalu klik Start untuk menjalankan Apache Web Server dan MySQL Database.
+9. Uji keberhasilan instalasi dengan mengakses http://localhost/phpmyadmin melalui browser Ubuntu.
 
 <h3>Konfigurasi Replikasi Basis Data</h3>
 
