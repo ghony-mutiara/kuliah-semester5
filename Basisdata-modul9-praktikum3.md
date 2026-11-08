@@ -3,18 +3,22 @@
 <h3>Pemasangan XAMPP di Komputer 2 (Linux Ubuntu)</h3>
 
 1. Buka web browser di Ubuntu. Kunjungi situs https://www.apachefriends.org dan unduh installer XAMPP for Linux. File ini akan otomatis tersimpan di folder Downloads pada Ubuntu.
-2. Buka aplikasi Terminal di Ubuntu, kemudian masuk ke direktori unduhan dengan mengetikkan perintah
+2. Buka aplikasi Terminal di Ubuntu, kemudian masuk ke direktori unduhan dengan mengetikkan perintah:
 ```bash
 cd Downloads
 ````
-3. Eksekusi installer dengan mengetikkan perintah
+3. Eksekusi installer dengan mengetikkan perintah:
 ```bash
 sudo ./xampp-linux-x64-7.4.10-0-installer.run
 ```
-4. Masukkan password akun Ubuntu saat diminta untuk memberikan izin instalasi.
-5. Ikuti proses Setup Wizard dengan menekan Next >. Pastikan komponen XAMPP Core Files dan XAMPP Developer Files terpilih. XAMPP akan diinstal ke direktori /opt/lampp. Selesaikan instalasi hingga muncul tombol Finish.
-6. Buka XAMPP Control Panel, masuk ke tab Manage Servers, lalu klik Start untuk menjalankan Apache Web Server dan MySQL Database.
-7. Uji keberhasilan instalasi dengan mengakses http://localhost/phpmyadmin melalui browser Ubuntu.
+4. Jika terdapat error "Permission Denied", masukkan perintah:
+```bash
+chmod +x xampp-linux-x64-8.2.4-0-installer.run
+``` 
+6. Masukkan password akun Ubuntu saat diminta untuk memberikan izin instalasi.
+7. Ikuti proses Setup Wizard dengan menekan Next >. Pastikan komponen XAMPP Core Files dan XAMPP Developer Files terpilih. XAMPP akan diinstal ke direktori /opt/lampp. Selesaikan instalasi hingga muncul tombol Finish.
+8. Buka XAMPP Control Panel, masuk ke tab Manage Servers, lalu klik Start untuk menjalankan Apache Web Server dan MySQL Database.
+9. Uji keberhasilan instalasi dengan mengakses http://localhost/phpmyadmin melalui browser Ubuntu.
 
 <h3>Konfigurasi Replikasi Basis Data</h3>
 
@@ -34,7 +38,7 @@ sudo ./xampp-linux-x64-7.4.10-0-installer.run
 **Konfigurasi Komputer 2 (Slave - Linux Ubuntu)**
 
 1. Buka web browser di Ubuntu, masuk ke akun email atau Google Drive, lalu unduh file rumahsakit_export.sql dan simpan ke folder Documents.
-2. Buka Terminal, jalankan XAMPP dengan perintah
+2. Buka Terminal, jalankan XAMPP dengan perintah:
 ```bash
 cd /opt/lampp lalu sudo ./manager-linux-x64.run
 ```
@@ -46,7 +50,7 @@ cd /opt/lampp lalu sudo ./manager-linux-x64.run
 ```sql
 replicate-do-db=rumahsakit
 ```
-8. Jika file tidak bisa disimpan karena read-only, ubah hak aksesnya melalui terminal menggunakan perintah
+8. Jika file tidak bisa disimpan karena read-only, ubah hak aksesnya melalui terminal menggunakan perintah:
 ```bash
 cd /opt/lampp/etc
 ```
@@ -54,7 +58,7 @@ cd /opt/lampp/etc
 sudo chmod a+rwx my.cnf
 ```
 9. Simpan file my.cnf dan Restart service Apache dan MySQL di XAMPP. Kembali ke browser phpMyAdmin, lalu klik Go.
-10. Jika muncul peringatan "Connection server disable...", ubah hak akses file konfigurasi melalui terminal dengan perintah
+10. Jika muncul peringatan "Connection server disable...", ubah hak akses file konfigurasi melalui terminal dengan perintah:
 ```bash
 cd /opt/lampp/phpmyadmin/libraries
 ```
@@ -62,18 +66,18 @@ cd /opt/lampp/phpmyadmin/libraries
 sudo chmod a+rwx config.default.php
 ```
 11. Buka file tersebut dan ubah nilai $cfg['AllowArbitraryServer'] = false menjadi true, lalu simpan dan restart service XAMPP kembali.
-12. Untuk mengaktifkan Slave via Terminal, buka Terminal Ubuntu, masuk ke direktori MySQL dengan perintah
+12. Untuk mengaktifkan Slave via Terminal, buka Terminal Ubuntu, masuk ke direktori MySQL dengan perintah:
 ```bash
 cd /opt/lampp/bin
 ```
 ```bash
 sudo ./mysql -u root
 ```
-13. Untuk melihat status slave ketikkan perintah
+13. Untuk melihat status slave ketikkan perintah:
 ```sql
 show status slave;
 ```
-14. Jika error (slave tidak aktif), lanjutkan ke langkah konfigurasi. Jika error tetapi slave dalam keadaan aktif, hentikan dulu dengan perintah
+14. Jika error (slave tidak aktif), lanjutkan ke langkah konfigurasi. Jika error tetapi slave dalam keadaan aktif, hentikan dulu dengan perintah:
 ```sql
 stop slave;
 ```
@@ -86,7 +90,7 @@ MASTER_PASSWORD='prodisi',
 MASTER_LOG_FILE='mysql-bin.000014',
 MASTER_LOG_POS=2926;
 ```
-17. Untuk memulai slave ketikkan perintah 
+17. Untuk memulai slave ketikkan perintah:
 ```sql
 start slave;
 ```
